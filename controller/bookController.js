@@ -4,10 +4,9 @@ const bookController = {};
 
 bookController.getAllData = async (req, res, next) => {
   try {
-    const book = await Book.find().populate("author", "-_id -__v");
-    if (book.genres) {
-      await book.populate("genres", "-_id -__v").execPop();
-    }
+    const book = await Book.find()
+      .populate("author", "-_id -__v")
+      .populate("genres", "-_id -__v");
     res.status(200).json({
       status: "Success",
       data: book,
@@ -23,13 +22,9 @@ bookController.getAllData = async (req, res, next) => {
 bookController.getData = async (req, res, next) => {
   try {
     // How to get the data
-    const book = await Book.findById(req.params.id).populate(
-      "author",
-      "-_id -__v"
-    );
-    if (book.genres) {
-      await book.populate("genres", "-_id -__v").execPop();
-    }
+    const book = await Book.findById(req.params.id)
+      .populate("author", "-_id -__v")
+      .populate("genres", "-_id -__v");
 
     res.status(200).json({
       status: "Success",

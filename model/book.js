@@ -16,7 +16,7 @@ const bookSchema = mongoose.Schema(
       ref: "Author",
       require: [true, "Author is required"],
     },
-    genres: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
+    genres: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genres" }],
   },
   { timestamps: true }
 );
