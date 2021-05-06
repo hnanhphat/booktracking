@@ -41,6 +41,26 @@ bookController.getData = async (req, res, next) => {
   }
 };
 
+bookController.getCurrentUserBooks = async (req, res, next) => {
+  try {
+    const userId = req.userId;
+    const book = await Book.find({ owner: userId })
+      .populate("author", "-_id -__v")
+      .populate("genres", "-_id -__v")
+      .populate("owner");
+
+    res.status(200).json({
+      status: "Success",
+      data: book,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "Fail",
+      error: error.message,
+    });
+  }
+};
+
 bookController.createData = async (req, res, next) => {
   try {
     // How can we create book data

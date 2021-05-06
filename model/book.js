@@ -5,22 +5,22 @@ const bookSchema = mongoose.Schema(
   {
     title: {
       type: String,
-      require: [true, "Book title is required"],
+      required: [true, "Book title is required"],
     },
     description: {
       type: String,
-      require: [true, "Description is required"],
+      required: [true, "Description is required"],
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Author",
-      require: [true, "Author is required"],
+      required: [true, "Author is required"],
     },
     genres: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genres" }],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      require: [true, "Owner is required"],
+      required: [true, "Owner is required"],
     },
   },
   { timestamps: true }

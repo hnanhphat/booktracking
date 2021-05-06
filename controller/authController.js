@@ -10,7 +10,7 @@ authController.loginWithEmail = async (req, res, next) => {
     const { email, password } = req.body;
 
     // 2. Check that email is exist in database
-    const user = await User.findOne({ username: email });
+    const user = await User.findOne({ email: email });
     if (!user) {
       throw new Error("This email is not exist");
     }
