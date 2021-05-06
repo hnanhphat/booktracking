@@ -1,4 +1,5 @@
 const User = require("../model/user");
+const bcrypt = require("bcrypt");
 
 const userController = {};
 
@@ -36,7 +37,13 @@ userController.getData = async (req, res, next) => {
 userController.createData = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const user = new User({ username: username, password: password });
+    // Encode password first
+    const salt = await bcrypt.genSalt(10);
+    const encodedPassword = await bcrypt.hash(password, salt);
+    console.log("What is", encodedPassword);
+
+    // And save encode password
+    const user = new User({ username: username, password: encodedPassword });
     await user.save();
 
     res.status(200).json({

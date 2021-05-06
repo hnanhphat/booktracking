@@ -6,7 +6,9 @@ bookController.getAllData = async (req, res, next) => {
   try {
     const book = await Book.find()
       .populate("author", "-_id -__v")
-      .populate("genres", "-_id -__v");
+      .populate("genres", "-_id -__v")
+      .populate("owner");
+
     res.status(200).json({
       status: "Success",
       data: book,
@@ -24,7 +26,8 @@ bookController.getData = async (req, res, next) => {
     // How to get the data
     const book = await Book.findById(req.params.id)
       .populate("author", "-_id -__v")
-      .populate("genres", "-_id -__v");
+      .populate("genres", "-_id -__v")
+      .populate("owner", "-_id -__v");
 
     res.status(200).json({
       status: "Success",
@@ -41,12 +44,14 @@ bookController.getData = async (req, res, next) => {
 bookController.createData = async (req, res, next) => {
   try {
     // How can we create book data
+    const userId = req.userId;
     const { title, description, author, genres } = req.body;
     const book = new Book({
       title: title,
       description: description,
       author: author,
       genres: genres,
+      owner: userId,
     });
     await book.save();
 
